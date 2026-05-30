@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  PAGAMENTOS_URL: http://pagamentos-service:3000
+  ESTOQUE_URL: http://estoque-service:3000

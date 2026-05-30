@@ -1,0 +1,82 @@
+services:
+
+  gateway:
+    build: ./gateway
+    image: gateway:1.0.0
+    container_name: gateway
+    ports:
+      - "3000:3000"
+    networks:
+      - produtos-network
+
+  pedidos:
+    build: ./pedidos
+    image: pedidos:1.0.0
+    container_name: pedidos
+
+    ports:
+      - "3001:3000"
+
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/pedidos_db"
+
+    depends_on:
+      - postgres
+
+    networks:
+      - produtos-network
+
+  pagamentos:
+    build: ./pagamentos
+    image: pagamentos:1.0.0
+    container_name: pagamentos
+    ports:
+      - "3002:3000"
+    networks:
+      - produtos-network
+
+  estoque:
+    build: ./estoque
+    image: estoque:1.0.0
+    container_name: estoque
+    ports:
+      - "3003:3000"
+    networks:
+      - produtos-network
+  
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    restart: always
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - produtos-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    networks:
+      - produtos-network
+
+networks:
+  produtos-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
