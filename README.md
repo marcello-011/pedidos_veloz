@@ -262,7 +262,7 @@ terraform destroy -var-file=envs/production.tfvars
 
 ## Vídeo Pitch
 
-📺 **[Assista no YouTube](https://youtube.com/watch?v=LINK_AQUI)** ← *substituir pelo link real*
+📺 **[Assista no YouTube]([https://youtube.com/watch?v=LINK_AQUI](https://youtu.be/Y0baX1EFFUE))** ← *substituir pelo link real*
 
 Conteúdo do vídeo (≤ 4 minutos):
 1. Visão geral da arquitetura e problema resolvido
